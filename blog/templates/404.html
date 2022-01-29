@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block content %}
+    <div id="content" class="container">
+        <div class="row margin-vert-30">
+            <div class="col-md-12">
+                <div class="error-404-page text-center">
+                    <h2>404!</h2>
+                    <h3>Access Denied</h3>
+                    <p>Yo do not have permissions to access this page, <br> had its name changed or is temporarily unavailable.</p>
+                    <form class="form-search search-404">
+                        <div class="input-append">
+                            <p>Return Home</p>
+                            <a href="{% url 'index' %}" class="btn btn-primary">Go</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock content %}
