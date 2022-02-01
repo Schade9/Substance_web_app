@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 {% load static %}
 {% load crispy_forms_tags %}
+{% load socialaccount %}
 
 {% block content %}
     <div id="content" class="container">
@@ -28,6 +29,7 @@
                         <hr>
                         <p>Forgot password? <a href="#">Click here</a></p>
                     </form>
+                    <p><a href="{% provider_login_url 'google' %}">Login With Google</a></p>
                 </div>
                 <!-- End Login Box -->
             </div>
