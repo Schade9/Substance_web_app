@@ -1,4 +1,6 @@
+from distutils.text_file import TextFile
 from django.db import models
+from django.forms import DateTimeField
 from django.utils import timezone
 from django.contrib.auth.models import User
 from django.urls import reverse
@@ -16,4 +18,12 @@ class Post(models.Model):
 
     def get_absolute_url(self):
         return reverse("post-detail", kwargs={"pk": self.pk})
-    
+
+class Reply(models.Model):
+    message = models.TextField()
+    sender = models.ForeignKey(User, on_delete=models.CASCADE)
+    post = models.ForeignKey(Post, on_delete=models.CASCADE)
+    reply_date = models.DateTimeField(default=timezone.now)
+
+    def __str__(self):
+        return self.title

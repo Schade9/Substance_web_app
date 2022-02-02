@@ -1,8 +1,8 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import logout
-from .models import Post
-from .forms import CreatePostForm, PostUpdateForm
+from .models import Post, Reply
+from .forms import CreatePostForm, PostUpdateForm, ReplyForm
  
 @login_required
 def index(request):
@@ -14,9 +14,20 @@ def index(request):
 
 @login_required
 def post_detail(request, pk):
+    form = ReplyForm(request.POST or None)
+    user = request.user
+    replies = Reply.objects.filter(sender=user).order_by('-reply_date')
     post = get_object_or_404(Post, pk=pk)
+    if request.method == 'POST':
+        if form.is_valid():
+            form.instance.sender = request.user
+            form.instance.post = post
+            form.save()
+            return redirect("index")
     context = {
-        'post': post
+        'post': post,
+        'replies': replies,
+        'form': form,
     }
     return render(request, "post_detail.html", context)
 
